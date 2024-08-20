@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "61880426608",
+    "project_id": "integral-app-e43c2",
+    "storage_bucket": "integral-app-e43c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61880426608:android:dfc2a1e76826beed8a94b5",
+        "android_client_info": {
+          "package_name": "com.ghost.integralapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIPBR-Row7Idk9qnvo0LA9jT8bPPC5-oM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
