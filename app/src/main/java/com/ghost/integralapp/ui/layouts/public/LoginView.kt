@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.ghost.integralapp.ui.theme.Blue40
+import com.ghost.integralapp.ui.theme.BlueGrey80
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -42,13 +44,15 @@ fun LoginForm(
             Text(
                 text = "Integral App",
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 18.dp)
+                modifier = Modifier.padding(bottom = 18.dp),
+                color = BlueGrey80
             )
             //Campo texto login - Ignacio Riquelme
             Text(
                 text = "Autentícate aqui.",
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
+                color = BlueGrey80
             )
 
             //campo texto usuario mail  - Ignacio Riquelme
@@ -65,7 +69,9 @@ fun LoginForm(
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+
+
             )
 
             //boton
@@ -88,8 +94,9 @@ fun LoginForm(
                     }
                 },
                 enabled = !isLoading,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Blue40)
+
             ) {
                 if (isLoading) {
                     Text("Realizando Validacion Credenciales")
@@ -101,7 +108,9 @@ fun LoginForm(
                 onClick = {
                     navController.navigate("register")
                 },
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Blue40)
+
             ) {
                 Text("Registro")
             }

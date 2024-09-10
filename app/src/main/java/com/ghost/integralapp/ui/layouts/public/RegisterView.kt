@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.ghost.integralapp.ui.theme.Blue40
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -100,7 +101,8 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
                     }
                 },
                 enabled = !isLoading,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Blue40)
             ) {
                 if (isLoading) {
                     Text("Registrando")
