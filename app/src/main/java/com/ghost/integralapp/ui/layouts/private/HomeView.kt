@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +36,7 @@ fun HomeView(userEmail: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        //Texto informativo de vbienvenida - Ignacio Riquelme
+        //Texto informativo de bienvenida - Ignacio Riquelme
         Text(
             text = "Bienvenid@ a Intergal App",
             style = MaterialTheme.typography.headlineMedium.copy(
@@ -59,13 +60,15 @@ fun HomeView(userEmail: String) {
         )
         //Mostrando mail de usuario autenticado - Ignacio Riquelme
         Text(
-            text = if (userEmail.isNotEmpty()) "Usuario: $userEmail" else "",
+            text = if (userEmail.isNotEmpty()) userEmail else "",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = Color.Black,
                 fontWeight = FontWeight.Medium,
                 fontSize = 20.sp
-            )
+            ),
+            modifier = Modifier.padding(bottom = 16.dp).testTag("usuarioTest"),
         )
+
         //mostrando botonera -  Ignacio Riquelme
         ButtonGrid()
     }

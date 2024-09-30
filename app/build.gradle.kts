@@ -69,4 +69,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation ("org.mockito:mockito-core:4.3.1") // Use the latest version available
+    // For AndroidX, you might want to use the Mockito Android variant
+    androidTestImplementation ("org.mockito:mockito-android:4.3.1")
 }

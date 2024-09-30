@@ -1,10 +1,14 @@
 package com.ghost.integralapp.ui.layouts.public
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -16,8 +20,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun LoginForm(
-    onLoginSuccess: (Any?) -> Unit,
-    navController: NavController
+    onLoginSuccess: (String?) -> Unit,
+    navController: NavController,
+    auth: FirebaseAuth = FirebaseAuth.getInstance()
 ) {
 
     //asignacion para formulario login basico . -Ignacio Riquelme
@@ -25,9 +30,10 @@ fun LoginForm(
     var password by remember { mutableStateOf("") }
     var notification by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     //se instancia objeto firebasae, que manipulara autenticacion - Ignaacio Riquelme
-    val auth = FirebaseAuth.getInstance()
+    //val auth = FirebaseAuth.getInstance()
 
     Box(
         //asignacoin basica contenedor de componentes pading y centrado de posicionamiento - Ignacio Riquelme
@@ -60,7 +66,7 @@ fun LoginForm(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).testTag("mail")
             )
 
             //campo texto pasaword 1 - ignaacio Riquelme
@@ -69,7 +75,7 @@ fun LoginForm(
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp).testTag("pass"),
 
 
             )
@@ -87,14 +93,17 @@ fun LoginForm(
                         isLoading = false
                         if (task.isSuccessful) {
                             notification = "Login Exitoso!"
+                            Toast.makeText(context, "login exitoso!", Toast.LENGTH_SHORT).show()
+
                             onLoginSuccess(email)
                         } else {
                             notification = "Login Fallido: ${task.exception?.localizedMessage}"
+                            Toast.makeText(context, "login fallido!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 },
                 enabled = !isLoading,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("LoginButton"),
                 colors = ButtonDefaults.buttonColors(containerColor = Blue40)
 
             ) {
@@ -108,20 +117,18 @@ fun LoginForm(
                 onClick = {
                     navController.navigate("register")
                 },
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 16.dp).testTag("register"),
                 colors = ButtonDefaults.buttonColors(containerColor = Blue40)
 
             ) {
                 Text("Registro")
             }
-            if (notification.isNotEmpty()) {
-                Text(
-                    text = notification,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-            }
+            Text(
+                text = notification,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 16.dp).testTag("responseLogin")
+            )
         }
     }
 }

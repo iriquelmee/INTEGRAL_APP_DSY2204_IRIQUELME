@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -21,6 +22,7 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
     var confirmPassword by remember { mutableStateOf("") }
     var notification by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
+    var regitered by remember { mutableStateOf("") }
 
     val auth = FirebaseAuth.getInstance()
 
@@ -49,7 +51,7 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).testTag("mail")
             )
 
             //campo txto tipo password 1 - Ignacio Riquelme
@@ -58,7 +60,7 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).testTag("pass1")
             )
 
             //campo txto tipo password 2 - Ignacio Riquelme
@@ -67,7 +69,7 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
                 onValueChange = { confirmPassword = it },
                 label = { Text("Confirm Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp).testTag("pass2")
             )
 
             //boton con manejo de evento onClick para realizar registro de credenciales. - Ignacio Riquelme
@@ -94,14 +96,16 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
                             notification = "Registro Exitoso."
                             //se pasa como parametro email a vista login para manipularlo dentro de esa vista. - Ignacio Riquelme
                             onRegisterSuccess(email)
+                            regitered = "1"
                         } else {
                             // se asigna respuesta de tipo notificacion en caso de haber problaas de autenticacion con firebas - Ignacio Riquelme
                             notification = "Registro Fallido: ${task.exception?.localizedMessage}"
+                            regitered = "0"
                         }
                     }
                 },
                 enabled = !isLoading,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("registroClick"),
                 colors = ButtonDefaults.buttonColors(containerColor = Blue40)
             ) {
                 if (isLoading) {
@@ -112,10 +116,10 @@ fun RegisterForm(onRegisterSuccess: (String) -> Unit) {
             }
             if (notification.isNotEmpty()) {
                 Text(
-                    text = notification,
+                    text = regitered,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier.padding(top = 16.dp).testTag("registroTestFail")
                 )
             }
         }
